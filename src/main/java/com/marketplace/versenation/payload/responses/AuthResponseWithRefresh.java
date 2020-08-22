@@ -1,0 +1,36 @@
+package com.marketplace.versenation.payload.responses;
+
+public class AuthResponseWithRefresh {
+    private String accessToken;
+    private String refreshToken;
+    private String tokenType = "Bearer";
+
+    public AuthResponseWithRefresh(String accessToken,String refreshToken) {
+        this.refreshToken = refreshToken;
+        this.accessToken = accessToken;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+}
