@@ -50,7 +50,7 @@ public class BiddingController {
             bid = bidRepository.findById(joinBidRequest.getTheBidId()).get();
             getDateDiff = bid.getDateDiff(bid.getCreationDate(), bid.getCurrentDate());
         } catch (Exception e) {
-            return ResponseEntity.ok(new ApiResponse(false, "bid doesn't exist"));
+            return ResponseEntity.badRequest().build();
         }
         if (0L != getDateDiff && 47 < getDateDiff) {
             if (!biddingService.canJoinRoom(user, bid)) {
@@ -59,13 +59,16 @@ public class BiddingController {
 
             String chargeId = stripeService.createCharge(user.getEmail(), "", 40);
             if (!Utility.isNotNullOrEmpty(chargeId))
-                return ResponseEntity.ok(new ApiResponse(false, "payment doesn't exist"));
+                return ResponseEntity.noContent().build();
             //add bidder
             bid.addBidder(user.getUsername());
-
-            //save bid into repo
+           //save bid into repo
             bidRepository.save(bid);
+
             return ResponseEntity.ok(new ApiResponse(true, "bidder has joined room"));
+
+
+
         }else{
             return ResponseEntity.notFound().build();
         }
