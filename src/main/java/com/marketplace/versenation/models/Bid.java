@@ -1,5 +1,6 @@
 package com.marketplace.versenation.models;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Range;
 
@@ -31,6 +32,10 @@ public class Bid {
     private Date creationDate;
     @Temporal(TemporalType.DATE)
     private Date bidStartDate;
+
+
+    @Column(name="number_Of_Bidders")
+    private int noOfBidders;
     @NotBlank
     @Size(max = 15)
     private String bidCreator;
@@ -73,9 +78,22 @@ public class Bid {
         this.creationDate = creationDate;
     }
 
+    public int getNoOfBidders() {
+        return noOfBidders;
+    }
+
+    public void setNoOfBidders(int noOfBidders) {
+        this.noOfBidders = noOfBidders;
+    }
+
     public long getDateDiff(Date date1, Date date2) {
         long diffInMillies = date2.getTime() - date1.getTime();
         return TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    }
+
+    public long getDateDiffInMinutes(Date date1, Date date2) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
     public Date getCurrentDate(){
         Date date= new Date();
@@ -85,6 +103,7 @@ public class Bid {
         if(hasBidStarted && !isBidRoomClosed && !isbiddingDone){
             return true;
         }
+
         return false;
     }
     public boolean hasBiddingStarted(){

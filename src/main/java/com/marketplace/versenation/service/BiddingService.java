@@ -22,7 +22,9 @@ public class BiddingService {
          return false;
      }
 
-    // public boolean hasNew
+     public boolean hasNewUserAdded(){
+     return false;
+     }
      public boolean isUserACreator(User user){
          return User.AccountType.CREATOR.equals(user.getAccountType());
      }
